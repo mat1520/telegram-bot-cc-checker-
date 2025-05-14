@@ -1,7 +1,12 @@
+# Ignorar archivos del sistema
 .git
 .gitignore
 .env
 node_modules
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos temporales y logs
 *.log
 *.bak
 *.zip
@@ -10,8 +15,8 @@ node_modules
 *.tgz
 *.swp
 *.swo
-.DS_Store
-Thumbs.db
+
+# Ignorar documentación y archivos de desarrollo
 README.md
 .gitattributes
 .gitmodules
@@ -20,6 +25,8 @@ tests/
 docs/
 *.md
 *.txt
+
+# Incluir archivos necesarios
 !composer.json
 !composer.lock
 !Procfile
@@ -33,8 +40,11 @@ docs/
 !userAgent.php
 !bypass.php
 !NovaFormat.php
+
+# Incluir directorios necesarios
 !Gateway/
 !Tool/
 !Tool_Admin/
 !Capsolver/
-!adyen/ 
+!adyen/
+!vendor/ 
