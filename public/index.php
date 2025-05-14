@@ -1,6 +1,6 @@
 <?php
 // Configurar el directorio raíz
-define('ROOT_DIR', __DIR__);
+define('ROOT_DIR', __DIR__ . '/app');
 
 // Incluir los archivos necesarios
 require_once ROOT_DIR . '/Telegram.php';
@@ -10,7 +10,7 @@ require_once ROOT_DIR . '/Class_Base.php';
 require_once ROOT_DIR . '/bypass.php';
 require_once ROOT_DIR . '/NovaFormat.php';
 require_once ROOT_DIR . '/Gen_Card.php';
-require_once ROOT_DIR . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 require_once ROOT_DIR . '/Capsolver/vendor/autoload.php';
 
 // Configuración del bot
