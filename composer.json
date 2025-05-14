@@ -3,11 +3,27 @@
     "description": "Telegram Bot Webhook",
     "type": "project",
     "require": {
-        "php": "^8.0",
+        "php": "^8.2",
         "ext-json": "*",
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "ext-sockets": "*",
+        "ext-tokenizer": "*",
+        "ext-xml": "*",
+        "ext-xmlreader": "*",
+        "ext-xmlwriter": "*",
+        "ext-zip": "*",
+        "ext-zlib": "*",
+        "ext-fileinfo": "*",
+        "ext-ctype": "*",
+        "ext-bcmath": "*",
+        "ext-gd": "*",
+        "ext-intl": "*"
     },
-    "require-dev": {
-        "heroku/heroku-buildpack-php": "*"
+    "config": {
+        "platform": {
+            "php": "8.2.12"
+        }
     }
 } 

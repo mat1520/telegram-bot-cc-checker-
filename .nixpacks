@@ -1,8 +1,10 @@
 [phases.setup]
-nixPkgs = ['php82', 'php82Packages.composer']
+nixPkgs = ['php82', 'php82Packages.composer', 'php82Extensions.curl']
 
 [phases.install]
-cmds = ['composer install --no-dev --optimize-autoloader']
+cmds = [
+    'composer install --no-dev --optimize-autoloader --ignore-platform-reqs'
+]
 
 [start]
 cmd = 'php -S 0.0.0.0:$PORT -t public/'
