@@ -4,8 +4,8 @@ nixPkgs = ['php82']
 [phases.install]
 cmds = [
     'rm -rf public',
-    'mkdir public',
-    'cp *.php public/',
+    'mkdir -p public',
+    'cp -r *.php public/',
     'cp -r Gateway Capsolver Tool Tool_Admin adyen public/',
     'composer install --no-dev --optimize-autoloader'
 ]
