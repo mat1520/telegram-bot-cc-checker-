@@ -2,4 +2,7 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "php -S 0.0.0.0:$PORT index.php" 
+startCommand = "php -S 0.0.0.0:$PORT index.php"
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "on-failure" 
