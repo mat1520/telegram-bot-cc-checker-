@@ -1,5 +1,11 @@
 [phases.setup]
 nixPkgs = ['php82', 'php82Packages.composer']
 
+[phases.install]
+cmds = ['composer install --no-dev --optimize-autoloader']
+
 [start]
-cmd = "php -S 0.0.0.0:$PORT index.php" 
+cmd = "php -S 0.0.0.0:$PORT -t public/"
+
+[deploy]
+startCommand = "php -S 0.0.0.0:$PORT -t public/" 
