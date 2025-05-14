@@ -3,9 +3,8 @@ nixPkgs = ['php82', 'php82Packages.composer']
 
 [phases.install]
 cmds = [
-    'mkdir -p public',
-    'cp -r Telegram.php CurlX.php userAgent.php Class_Base.php bypass.php NovaFormat.php Gen_Card.php Gateway Capsolver Tool Tool_Admin adyen public/',
-    'composer install --no-dev --optimize-autoloader --ignore-platform-reqs'
+    'composer install --no-dev --optimize-autoloader --ignore-platform-reqs',
+    'cp -r * public/ 2>/dev/null || true'
 ]
 
 [start]
