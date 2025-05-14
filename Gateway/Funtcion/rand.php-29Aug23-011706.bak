@@ -1,0 +1,110 @@
+<?php
+if(strpos($message, "/addr")===0 or strpos($message, "!addr")===0 or strpos($message, ".addr")===0){
+sendaction($chatId, typing);
+deleteprm($userId);
+$Comu = substr($message, 6);
+if (empty($Comu)){
+        $photo = 'https://graph.org/file/44798ef3f6b9e1a9b268f.jpg';
+        reply_to($chatId, $message_id,$keyboard,'<b>Ingresa un PAIS:</b>');
+        die();
+    }
+if(strlen($Comu > 2)) {
+    reply_to($chatId, $message_id,$keyboard,'<b>Invalido</b>');
+        die();
+}
+if ($userId != $Mi_Id ){
+    if($chatId != verifiCharAdmin($chatId)){
+    if( $userId != verifiPremium($userId)){
+        if($userId != verifiAdmin($userId)){
+			if($userId != veritimepremium($userId)){
+			bot('sendMessage', [
+                'chat_id' =>$chatId,
+    'reply_to_message_id'=>$message_id,
+    'parse_mode'=>'HTML',
+                'text' =>"<b>Hello this chat is not Authorized
+❄️ Buy a membership to make use of this commands
+═══════════════════════
+↯ Contact A Owner or a Seller</b>",
+                'reply_markup'=> json_encode(['inline_keyboard'=>[
+                    [['text'=>"🝂 𝗥𝗶𝘁𝗮 𝗖𝗵𝗲𝗰𝗸「𝑹𝒚𝒌」 ",'url'=>"https://t.me/+9PVHHRlmIgQ3Yzhh"]]
+                    ],'resize_keyboard'=>true])
+                ]);       
+    die();
+}}}}}
+$rotate = BotProxyUser();
+$socks5 = BotProxyUrl();
+
+$R =
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_PROXY, $socks5);
+curl_setopt($ch, CURLOPT_PROXYUSERPWD, $rotate);
+curl_setopt($ch, CURLOPT_URL, 'https://www.fakexy.com/fake-address-generator-'.$Comu.'');
+curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+$headers = array();
+$headers[] = 'authority: www.fakexy.com';
+$headers[] = 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9';
+$headers[] = 'accept-language: es-ES,es;q=0.9';
+$headers[] = 'cache-control: max-age=0';
+$headers[] = 'referer: https://www.fakexy.com/fake-address-countries';
+$headers[] = 'sec-ch-ua: "Chromium";v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"';
+$headers[] = 'sec-ch-ua-mobile: ?0';
+$headers[] = 'sec-ch-ua-platform: "Windows"';
+$headers[] = 'sec-fetch-dest: document';
+$headers[] = 'sec-fetch-mode: navigate';
+$headers[] = 'sec-fetch-site: same-origin';
+$headers[] = 'sec-fetch-user: ?1';
+$headers[] = 'upgrade-insecure-requests: 1';
+$headers[] = 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+$curl = curl_exec($ch);
+$Strett = trim(strip_tags(getstr($curl, '<td>Street</td>','</td>')));
+$city = trim(strip_tags(getstr($curl, '<td>City/Town</td>','</td>')));
+$State = trim(strip_tags(getstr($curl, '<td>State/Province/Region</td>','</td>')));
+$Postal = trim(strip_tags(getstr($curl, '<td>Zip/Postal Code</td>','</td>')));
+$Country = trim(strip_tags(getstr($curl, '<td>Country</td>','</td>')));
+if (empty($curl)){
+    bot('sendMessage', [
+    'chat_id' =>$chatId,
+'reply_to_message_id'=>$message_id,
+'parse_mode'=>'HTML',
+    'text' =>"<b>Error en la Api</b>"
+]);        die();
+    }
+
+if ((strpos($curl, "A PHP Error was encountered"))){
+    bot('sendMessage', [
+    'chat_id' =>$chatId,
+'reply_to_message_id'=>$message_id,
+'parse_mode'=>'HTML',
+    'text' =>"<b>No se encuentra ese Pais Disponible</b>"
+]);
+    die();
+}
+
+
+
+bot('sendMessage', [
+    'chat_id' =>$chatId,
+'reply_to_message_id'=>$message_id,
+'parse_mode'=>'HTML',
+    'text' =>"<b>
+📆 Random Fake Address
+－－－－－－－－－－－－－－－－
+- Address : <code>$Strett</code>
+- City : <code>$city</code>
+- State : <code>$State</code>
+- Postcode : <code>$Postal</code>
+- Country : <code>$Country</code>
+－－－－－－－－－－－－－－－－</b>"
+]);
+}
+
+
+
+?>

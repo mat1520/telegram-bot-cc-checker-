@@ -1,0 +1,29 @@
+{
+  "name": "json_encode",
+  "version": "0.1.0",
+  "description": "Do JSON.stringify() like json_encode() in PHP does",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/titarenko/json_encode.git"
+  },
+  "keywords": [
+    "JSON", "json_encode"
+  ],
+  "author": "Constantin Titarenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/titarenko/json_encode/issues"
+  },
+  "homepage": "https://github.com/titarenko/json_encode#readme",
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "should": "^7.0.1"
+  }
+}

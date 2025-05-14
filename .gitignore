@@ -1,0 +1,27 @@
+# Archivos de entorno
+.env
+.env.*
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de IDE
+.idea/
+.vscode/
+*.sublime-*
+
+# Archivos de logs
+*.log
+error_log.txt
+
+# Archivos de dependencias
+/vendor/
+/node_modules/
+
+# Archivos de caché
+*.cache
+*.tmp
+
+# Archivos de configuración local
+config.local.php 

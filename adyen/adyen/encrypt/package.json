@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "json_encode": "^0.1.0",
+    "node-adyen-encrypt": "^2.3.1",
+    "split": "^1.0.1"
+  }
+}

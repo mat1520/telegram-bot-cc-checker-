@@ -1,0 +1,30 @@
+{
+  "name": "node-adyen-encrypt",
+  "version": "2.3.1",
+  "description": "Adyen encryption for Node.js.",
+  "main": "index.js",
+  "scripts": {
+    "test-dev": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmop/node-adyen-encrypt.git"
+  },
+  "keywords": [
+    "Adyen",
+    "node",
+    "encrypt",
+    "cse",
+    "web",
+    "javascript"
+  ],
+  "author": "dmop",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmop/node-adyen-encrypt/issues"
+  },
+  "homepage": "https://github.com/dmop/node-adyen-encrypt#readme",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}

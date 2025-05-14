@@ -1,0 +1,22 @@
+{
+    "name": "greezlu/capsolver-php",
+    "type": "library",
+    "version": "0.9.2",
+    "autoload": {
+        "psr-4": {
+            "Capsolver\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "greezlu",
+            "email": "greezlu@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "license": "MIT"
+}
