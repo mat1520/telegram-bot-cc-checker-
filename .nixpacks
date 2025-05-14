@@ -4,21 +4,14 @@ nixPkgs = ['php82']
 [phases.install]
 cmds = [
     'composer install --no-dev --optimize-autoloader',
-    'rm -rf public',
-    'mkdir -p public/app',
-    'cp -r *.php public/app/',
-    'cp -r Gateway public/app/',
-    'cp -r Capsolver public/app/',
-    'cp -r Tool public/app/',
-    'cp -r Tool_Admin public/app/',
-    'cp -r adyen public/app/',
-    'cp -r vendor public/',
-    'cp composer.json public/',
-    'cp composer.lock public/ || true'
+    'mkdir -p bot',
+    'cp -r *.php bot/',
+    'cp -r Gateway Capsolver Tool Tool_Admin adyen bot/',
+    'cp -r vendor bot/'
 ]
 
 [start]
-cmd = 'cd public && php -S 0.0.0.0:$PORT'
+cmd = 'cd bot && php -S 0.0.0.0:$PORT index.php'
 
 [deploy]
 startCommand = "php -S 0.0.0.0:$PORT -t public/" 
