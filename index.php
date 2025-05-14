@@ -50,16 +50,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'], 'a
 // Configurar el directorio raíz
 define('ROOT_DIR', __DIR__);
 
-// Incluir los archivos necesarios
-require_once ROOT_DIR . '/Telegram.php';
-require_once ROOT_DIR . '/CurlX.php';
-require_once ROOT_DIR . '/userAgent.php';
-require_once ROOT_DIR . '/Class_Base.php';
-require_once ROOT_DIR . '/bypass.php';
-require_once ROOT_DIR . '/NovaFormat.php';
-require_once ROOT_DIR . '/Gen_Card.php';
-require_once ROOT_DIR . '/vendor/autoload.php';
-require_once ROOT_DIR . '/Capsolver/vendor/autoload.php';
+// Lista de archivos requeridos
+$required_files = [
+    '/Telegram.php',
+    '/CurlX.php',
+    '/userAgent.php',
+    '/Class_Base.php',
+    '/bypass.php',
+    '/NovaFormat.php',
+    '/Gen_Card.php',
+    '/vendor/autoload.php',
+    '/Capsolver/vendor/autoload.php'
+];
+
+// Verificar y cargar archivos requeridos
+foreach ($required_files as $file) {
+    $file_path = ROOT_DIR . $file;
+    if (!file_exists($file_path)) {
+        error_log("Required file not found: " . $file_path);
+        continue;
+    }
+    require_once $file_path;
+}
+
+// Verificar que los archivos críticos se cargaron
+if (!class_exists('Telegram') || !class_exists('CurlX')) {
+    error_log("Critical classes not loaded. Check if required files exist and are accessible.");
+    exit("Error: Required components not available.");
+}
 
 // Configuración del bot
 $botToken = "7949646703:AAG7o1_6fIA7UCEK1PwKj1cagyxMUDkiNf4"; // Token del bot

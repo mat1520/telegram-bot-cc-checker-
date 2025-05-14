@@ -137,16 +137,28 @@ class CurlX
     {
         // set the current dir
         self::$current_dir = dirname(__FILE__);
-        # check if the dir exits, if not create it
-        if(!is_dir(self::$current_dir.'/Cache/')) mkdir(self::$current_dir.'/Cache/', 0755);
-        // PHP7.4+
-        self::$cookie_file = sprintf("%s/Cache/curlX_%s.txt", self::$current_dir, $file);
-        // check if the dir is writable
-        if (!is_writable(self::$current_dir)) {
-            trigger_error("The current directory is not writable, please add permissions 0755 to Cache dir and 0644 to CurlX.php", E_USER_ERROR);
-            return;
+        
+        // Create Cache directory if it doesn't exist
+        $cache_dir = self::$current_dir . '/Cache';
+        if (!file_exists($cache_dir)) {
+            if (!@mkdir($cache_dir, 0755, true)) {
+                trigger_error("Could not create Cache directory at: " . $cache_dir, E_USER_WARNING);
+                return;
+            }
         }
         
+        // Ensure directory is writable
+        if (!is_writable($cache_dir)) {
+            if (!@chmod($cache_dir, 0755)) {
+                trigger_error("Cache directory is not writable and could not be made writable: " . $cache_dir, E_USER_WARNING);
+                return;
+            }
+        }
+        
+        // Set cookie file path
+        self::$cookie_file = $cache_dir . '/curlX_' . $file . '.txt';
+        
+        // Set cookie options
         self::SetOpt([
             CURLOPT_COOKIEJAR => self::$cookie_file,
             CURLOPT_COOKIEFILE => self::$cookie_file
