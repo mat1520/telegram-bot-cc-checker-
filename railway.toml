@@ -2,4 +2,4 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "cd bot && php -S 0.0.0.0:$PORT index.php" 
+startCommand = "php -S 0.0.0.0:$PORT index.php" 

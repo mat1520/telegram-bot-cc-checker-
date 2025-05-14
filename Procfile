@@ -1,1 +1,1 @@
-web: cd bot && php -S 0.0.0.0:$PORT index.php 
+web: php -S 0.0.0.0:$PORT index.php 
