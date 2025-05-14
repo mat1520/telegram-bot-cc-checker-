@@ -1,0 +1,5 @@
+[phases.setup]
+nixPkgs = ['php82', 'php82Packages.composer']
+
+[start]
+cmd = "php -S 0.0.0.0:$PORT index.php" 
