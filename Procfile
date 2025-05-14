@@ -1,1 +1,1 @@
-web: php -S 0.0.0.0:$PORT -t public 
+web: cd public && php -S 0.0.0.0:$PORT 

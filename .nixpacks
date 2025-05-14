@@ -2,10 +2,16 @@
 nixPkgs = ['php82']
 
 [phases.install]
-cmds = ['composer install --no-dev --optimize-autoloader']
+cmds = [
+    'rm -rf public',
+    'mkdir public',
+    'cp *.php public/',
+    'cp -r Gateway Capsolver Tool Tool_Admin adyen public/',
+    'composer install --no-dev --optimize-autoloader'
+]
 
 [start]
-cmd = 'php -S 0.0.0.0:$PORT -t public'
+cmd = 'cd public && php -S 0.0.0.0:$PORT'
 
 [deploy]
 startCommand = "php -S 0.0.0.0:$PORT -t public/" 
