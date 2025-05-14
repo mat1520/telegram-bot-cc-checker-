@@ -6,7 +6,7 @@ buildCommand = "composer install --no-dev --optimize-autoloader"
 startCommand = "php -S 0.0.0.0:$PORT -t public/"
 healthcheckPath = "/"
 healthcheckTimeout = 100
-restartPolicyType = "on-failure"
+restartPolicy = "on-failure"
 restartPolicyMaxRetries = 10
 
 [phases.setup]
