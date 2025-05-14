@@ -2,8 +2,6 @@
 .gitignore
 .env
 node_modules
-vendor/*
-!vendor/autoload.php
 *.log
 *.bak
 *.zip
@@ -26,5 +24,4 @@ docs/
 !composer.lock
 !Procfile
 !railway.toml
-!runtime.txt
-!public/ 
+!runtime.txt 
