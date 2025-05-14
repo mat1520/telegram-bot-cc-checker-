@@ -24,4 +24,11 @@ error_log.txt
 *.tmp
 
 # Archivos de configuración local
-config.local.php 
+config.local.php
+
+# Excluir archivos adicionales
+.git/
+.gitignore
+node_modules/
+*.bak
+*.swp 
