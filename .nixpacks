@@ -5,7 +5,7 @@ nixPkgs = ['php82', 'php82Packages.composer']
 cmds = ['composer install --no-dev --optimize-autoloader']
 
 [start]
-cmd = "php -S 0.0.0.0:$PORT -t public/"
+cmd = 'php -S 0.0.0.0:$PORT -t public/'
 
 [deploy]
 startCommand = "php -S 0.0.0.0:$PORT -t public/" 
