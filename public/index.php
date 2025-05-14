@@ -1,6 +1,6 @@
 <?php
 // Configurar el directorio raíz
-define('ROOT_DIR', dirname(__DIR__));
+define('ROOT_DIR', __DIR__);
 
 // Incluir los archivos necesarios
 require_once ROOT_DIR . '/Telegram.php';
@@ -11,7 +11,7 @@ require_once ROOT_DIR . '/bypass.php';
 require_once ROOT_DIR . '/NovaFormat.php';
 require_once ROOT_DIR . '/Gen_Card.php';
 require_once ROOT_DIR . '/vendor/autoload.php';
-require_once ROOT_DIR . "/Capsolver/vendor/autoload.php";
+require_once ROOT_DIR . '/Capsolver/vendor/autoload.php';
 
 // Configuración del bot
 $botToken = "7949646703:AAG7o1_6fIA7UCEK1PwKj1cagyxMUDkiNf4"; // Token del bot
@@ -74,14 +74,8 @@ if (!empty($update)) {
             exit;
         }
         
-        // Aquí iría la lógica de verificación de la tarjeta
-        $response = "💳 Información de la tarjeta:\n\n";
-        $response .= "Número: <code>{$card['card']}</code>\n";
-        $response .= "Mes: <code>{$card['MES']}</code>\n";
-        $response .= "Año: <code>{$card['ANO']}</code>\n";
-        $response .= "CVV: <code>{$card['CVV']}</code>\n";
-        $response .= "Tipo: " . ($card['Amex'] ? "American Express" : "Visa/Mastercard");
-        
+        // Procesar la tarjeta con los gateways
+        $response = processCard($card);
         reply_to($chat_id, $message['message_id'], null, $response);
     }
     
@@ -89,8 +83,32 @@ if (!empty($update)) {
     if ($callback_query) {
         $chat_id = $callback_query['message']['chat']['id'];
         $data = $callback_query['data'];
-        // Procesar las acciones de los botones aquí
+        processCallback($chat_id, $data);
     }
+}
+
+// Función para procesar la tarjeta con los gateways
+function processCard($card) {
+    $response = "💳 Información de la tarjeta:\n\n";
+    $response .= "Número: <code>{$card['card']}</code>\n";
+    $response .= "Mes: <code>{$card['MES']}</code>\n";
+    $response .= "Año: <code>{$card['ANO']}</code>\n";
+    $response .= "CVV: <code>{$card['CVV']}</code>\n";
+    $response .= "Tipo: " . ($card['Amex'] ? "American Express" : "Visa/Mastercard") . "\n\n";
+    
+    // Aquí iría la lógica de verificación con los gateways
+    // Por ahora solo mostramos la información básica
+    return $response;
+}
+
+// Función para procesar callbacks
+function processCallback($chat_id, $data) {
+    global $telegram;
+    // Implementar la lógica de los callbacks aquí
+    $telegram->answerCallbackQuery([
+        'callback_query_id' => $data,
+        'text' => 'Procesando...'
+    ]);
 }
 
 // Incluir las funciones auxiliares
