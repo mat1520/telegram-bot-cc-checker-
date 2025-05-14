@@ -2,6 +2,4 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "php -S 0.0.0.0:$PORT -t public"
-restartPolicy = "on-failure"
-restartPolicyType = "on-failure" 
+startCommand = "php -S 0.0.0.0:$PORT -t public" 
