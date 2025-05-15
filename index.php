@@ -22,7 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     exit;
 }
 // Responder a POST vacío para evitar 404 en webhooks sin datos
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty(file_get_contents('php://input'))) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    file_put_contents('php://stderr', "Webhook recibido: " . file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
     http_response_code(200);
     echo "OK";
     exit;
