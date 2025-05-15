@@ -2,6 +2,9 @@
 // ini_set("log_errors", TRUE);
 // ini_set("error_log", "./error_log.txt");
 
+// Log de depuración para ver si el webhook llega (primera línea)
+file_put_contents('php://stderr', "Webhook recibido: " . file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
+
 ignore_user_abort(true);
 // ob_end_clean();
 // header("Connection: close\r\n");
@@ -47,13 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'], 'a
     }
 }
 
-// Log de depuración para ver si el webhook llega
-file_put_contents('php://stderr', "Webhook recibido: " . file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
-
 // Configurar el directorio raíz
 define('ROOT_DIR', __DIR__);
 
-// Lista de archivos requeridos
+// Lista de archivos requeridos (rutas relativas a ROOT_DIR)
 $required_files = [
     '/Telegram.php',
     '/CurlX.php',
@@ -62,18 +62,35 @@ $required_files = [
     '/bypass.php',
     '/NovaFormat.php',
     '/Gen_Card.php',
-    '/vendor/autoload.php',
-    '/Capsolver/vendor/autoload.php'
 ];
 
-// Verificar y cargar archivos requeridos
 foreach ($required_files as $file) {
     $file_path = ROOT_DIR . $file;
     if (!file_exists($file_path)) {
         error_log("Required file not found: " . $file_path);
-        continue;
+        file_put_contents('php://stderr', "ERROR: Required file not found: $file_path\n", FILE_APPEND);
+        exit("Error: Required file not found: $file_path");
     }
     require_once $file_path;
+}
+
+// Autoload de Composer (universal)
+$autoload_paths = [
+    ROOT_DIR . '/vendor/autoload.php',
+    ROOT_DIR . '/vendor/vendor/autoload.php',
+    ROOT_DIR . '/Capsolver/vendor/autoload.php',
+];
+$autoload_loaded = false;
+foreach ($autoload_paths as $autoload) {
+    if (file_exists($autoload)) {
+        require_once $autoload;
+        $autoload_loaded = true;
+    }
+}
+if (!$autoload_loaded) {
+    error_log("ERROR: Ningún autoload.php encontrado. Ejecuta 'composer install'.");
+    file_put_contents('php://stderr', "ERROR: Ningún autoload.php encontrado. Ejecuta 'composer install'.\n", FILE_APPEND);
+    exit("Error: Ningún autoload.php encontrado. Ejecuta 'composer install'.");
 }
 
 // Verificar que los archivos críticos se cargaron
@@ -272,53 +289,64 @@ function checkWebhook() {
 // Manejo de actualizaciones del webhook
 $update = $telegram->getData();
 if (!empty($update)) {
-$message = $update['message'] ?? null;
-$callback_query = $update['callback_query'] ?? null;
+    $message = $update['message'] ?? null;
+    $callback_query = $update['callback_query'] ?? null;
 
     // Procesar mensajes de texto
     if ($message && isset($message['text'])) {
         $chat_id = $message['chat']['id'];
         $text = $message['text'];
-    
+
+        // Comando /start universal
+        if (strtolower($text) === '/start') {
+            $telegram->sendMessage([
+                'chat_id' => $chat_id,
+                'text' => "👋 ¡Bienvenido! Envía una tarjeta en el formato: <code>número|mes|año|cvv</code> o usa un comando de gateway.",
+                'parse_mode' => 'HTML'
+            ]);
+            exit;
+        }
+
         // Comando para verificar el estado del webhook
-        if ($text === '/webhook') {
-            if (checkWebhook()) {
-                $telegram->sendMessage([
-                    'chat_id' => $chat_id,
-                    'text' => "✅ Webhook está funcionando correctamente!"
-                ]);
-            } else {
-                $telegram->sendMessage([
-                    'chat_id' => $chat_id,
-                    'text' => "❌ Webhook no está configurado correctamente"
-                ]);
-            }
+        if (strtolower($text) === '/webhook') {
+            $telegram->sendMessage([
+                'chat_id' => $chat_id,
+                'text' => "✅ Webhook está funcionando correctamente!"
+            ]);
+            exit;
+        }
+
+        // Procesar otros mensajes (tarjetas, comandos gateways, etc.)
+        $card = Parser1($text);
+        if (isset($card['valid']) && $card['valid'] === "ERROR") {
+            $telegram->sendMessage([
+                'chat_id' => $chat_id,
+                'text' => "❌ Formato de tarjeta inválido. Use el formato:\nNúmero|Mes|Año|CVV"
+            ]);
+            exit;
+        }
+        if (!isset($card['card']) || !isset($card['MES']) || !isset($card['ANO']) || !isset($card['CVV'])) {
+            $telegram->sendMessage([
+                'chat_id' => $chat_id,
+                'text' => "❌ No se pudo extraer la información de la tarjeta. Verifique el formato."
+            ]);
+            exit;
+        }
+        // Procesar la tarjeta con los gateways (puedes expandir aquí)
+        $response = processCard($card);
+        $telegram->sendMessage([
+            'chat_id' => $chat_id,
+            'text' => $response,
+            'parse_mode' => 'HTML'
+        ]);
         exit;
     }
-    
-        // Procesar otros mensajes
-        $card = Parser1($text);
-        
-        if (isset($card['valid']) && $card['valid'] === "ERROR") {
-            reply_to($chat_id, $message['message_id'], null, "❌ Formato de tarjeta inválido. Use el formato:\nNúmero|Mes|Año|CVV");
-            exit;
-        }
-        
-        if (!isset($card['card']) || !isset($card['MES']) || !isset($card['ANO']) || !isset($card['CVV'])) {
-            reply_to($chat_id, $message['message_id'], null, "❌ No se pudo extraer la información de la tarjeta. Verifique el formato.");
-            exit;
-        }
-        
-        // Procesar la tarjeta con los gateways
-        $response = processCard($card);
-        reply_to($chat_id, $message['message_id'], null, $response);
-    }
-    
     // Procesar callback queries
     if ($callback_query) {
         $chat_id = $callback_query['message']['chat']['id'];
         $data = $callback_query['data'];
         processCallback($chat_id, $data);
+        exit;
     }
 }
 
