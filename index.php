@@ -16,14 +16,62 @@ ignore_user_abort(true);
 // ob_end_flush();
 // flush();
 
-// Responder a GET para healthcheck de Railway y evitar 404
+// Healthcheck para Railway
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     echo "OK";
     exit;
 }
-// Responder a POST vacío para evitar 404 en webhooks sin datos
+
+// Webhook de Telegram
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    file_put_contents('php://stderr', "Webhook recibido: " . file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
+    $input = file_get_contents('php://input');
+    file_put_contents('php://stderr', "Webhook recibido: $input\n", FILE_APPEND);
+    $update = json_decode($input, true);
+    $message = $update['message']['text'] ?? '';
+    $chat_id = $update['message']['chat']['id'] ?? '';
+
+    // Detectar comando (ej: /an, /pp, /rt, etc.)
+    if (preg_match('/^\/(\w+)/', $message, $matches)) {
+        $cmd = strtolower($matches[1]);
+        $gateway_paths = [
+            __DIR__ . "/Gateway/Free/$cmd.php",
+            __DIR__ . "/Gateway/CCN/$cmd.php",
+            __DIR__ . "/Gateway/CCN CHARGED/$cmd.php",
+            __DIR__ . "/Gateway/mass/$cmd.php"
+        ];
+        $found = false;
+        foreach ($gateway_paths as $path) {
+            if (file_exists($path)) {
+                ob_start();
+                include $path;
+                $response = ob_get_clean();
+                $found = true;
+                break;
+            }
+        }
+        if (!$found) {
+            $response = "❌ Comando no reconocido o gateway no disponible.";
+        }
+    } else {
+        $response = "❌ Formato no válido. Usa /comando o consulta los gateways disponibles.";
+    }
+
+    // Responder en Telegram
+    if ($chat_id) {
+        $api_url = "https://api.telegram.org/bot7949646703:AAG7o1_6fIA7UCEK1PwKj1cagyxMUDkiNf4/sendMessage";
+        $data = [
+            'chat_id' => $chat_id,
+            'text' => $response
+        ];
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $api_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        curl_exec($ch);
+        curl_close($ch);
+    }
     http_response_code(200);
     echo "OK";
     exit;
