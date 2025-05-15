@@ -47,6 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'], 'a
     }
 }
 
+// Log de depuración para ver si el webhook llega
+file_put_contents('php://stderr', "Webhook recibido: " . file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
+
 // Configurar el directorio raíz
 define('ROOT_DIR', __DIR__);
 
