@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../common.php';
 if(cmd($message, "kl")){
     is_duro();
 $NameGater ='Kali';

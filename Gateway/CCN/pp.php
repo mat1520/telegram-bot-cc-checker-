@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . '/../common.php';
 
 $cmd = Command($message);
 if (strtolower($cmd['command']) == "pp") { 

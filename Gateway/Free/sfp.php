@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../common.php';
 if(cmd($message, "shp")){
         is_registerv();
 $NameGater ='Shopify';
@@ -170,9 +171,9 @@ $response = "3D verification, fraud. 🔴";
 }elseif ($result2 == 'idship Empty'){ 
 $status = "[ DECLINED 🔴 ]";
 $response = "Card was declined.";
-}elseif ($result2 == 'Your payment details couldn’t be verified. Check your card details and try again.'){ 
-$status = "[ DECLINED 🔴 ]";
-$response = "Card was declined";
+}elseif ($result2 == "Your payment details couldn't be verified. Check your card details and try again."){ 
+$status = "[ DECLINED 🔴];
+$response = "Card was declined ";
 }elseif ($result2 == 'There was a problem processing the payment. Try refreshing this page or check your internet connection.'){ 
 $status = "[ DECLINED 🔴 ]";
 $response = "Card was declined";
@@ -232,23 +233,24 @@ bot('editMessageText',[
     'chat_id'=>$chatId,
     'disable_web_page_preview' => true,
     'message_id'=>$messageidtoedit,
-    'text'=>"<b>Card - 🝂 <code>$cc|$mes|$ano|$cvv</code> 
-Status - 🝂 $statu<b>[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Gate Auth: >_ $- Stripe Auth
-━━━━━━━━━━━━━━━━
-[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Card: <code>$cc|$mes|$ano|$cvv</code> 
-[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Status: <code>$status</code>
-[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Response: <code>$response</code>
-━━━━━━━━━━━━━━━━
-[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Country: <code>$country - $emoji</code>
-[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Type: <code>$type - $brand - $scheme</code>
-[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Bank: <code>$bank</code> 
-━━━━━━━━━━━━━━━━
-[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Card Check info: Proxy's: <code>Live ✅</code> 
-[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Time: <code>$tiempo</code> | Gate: <code>$NameGater</code>
-[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Checked by: <a href='tg://user?id=$userId'>$username</a>[<code>$Rank</code>]
-━━━━━━━━━━━━━━━━</b>",
-'parse_mode'=>'html',
-'reply_to_message_id'=> $message_id]);
+    'text'=>"<b>Card - 🝂 <code>$cc|$mes|$ano|$cvv</code>\nStatus - 🝂 $status</b>\n"
+        ."[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Gate Auth: >_ $- Stripe Auth\n"
+        ."━━━━━━━━━━━━━━━━\n"
+        ."[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Card: <code>$cc|$mes|$ano|$cvv</code> \n"
+        ."[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Status: <code>$status</code>\n"
+        ."[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Response: <code>$response</code>\n"
+        ."━━━━━━━━━━━━━━━━\n"
+        ."[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Country: <code>$country - $emoji</code>\n"
+        ."[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Type: <code>$type - $brand - $scheme</code>\n"
+        ."[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Bank: <code>$bank</code> \n"
+        ."━━━━━━━━━━━━━━━━\n"
+        ."[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Card Check info: Proxy's: <code>Live ✅</code> \n"
+        ."[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Time: <code>$tiempo</code> | Gate: <code>$NameGater</code>\n"
+        ."[<a href='https://t.me/ritabotchk/35'>ϟ</a>] Checked by: <a href='tg://user?id=$userId'>$username</a>[<code>$Rank</code>]\n"
+        ."━━━━━━━━━━━━━━━━</b>",
+    'parse_mode'=>'html',
+    'reply_to_message_id'=> $message_id
+]);
 
 }
 

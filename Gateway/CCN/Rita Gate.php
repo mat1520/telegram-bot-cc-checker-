@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../common.php';
 list($cmd) = explode(" ", $message);
 if($cmd == "/rt" or $cmd == ".rt" or $cmd == "!rt"){
 $NameGater ='Rita';

@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../common.php';
 ini_set("log_errors", TRUE);
 ini_set("error_log", "./error_log.txt");
 
