@@ -16,6 +16,18 @@ ignore_user_abort(true);
 // ob_end_flush();
 // flush();
 
+// Responder a GET para healthcheck de Railway y evitar 404
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    echo "OK";
+    exit;
+}
+// Responder a POST vacío para evitar 404 en webhooks sin datos
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty(file_get_contents('php://input'))) {
+    http_response_code(200);
+    echo "OK";
+    exit;
+}
+
 // Si recibimos un POST con JSON, procesamos el mensaje manualmente para pruebas locales
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
     $input = file_get_contents('php://input');
