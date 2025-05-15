@@ -269,14 +269,14 @@ function checkWebhook() {
 // Manejo de actualizaciones del webhook
 $update = $telegram->getData();
 if (!empty($update)) {
-    $message = $update['message'] ?? null;
-    $callback_query = $update['callback_query'] ?? null;
-    
+$message = $update['message'] ?? null;
+$callback_query = $update['callback_query'] ?? null;
+
     // Procesar mensajes de texto
     if ($message && isset($message['text'])) {
         $chat_id = $message['chat']['id'];
         $text = $message['text'];
-        
+    
         // Comando para verificar el estado del webhook
         if ($text === '/webhook') {
             if (checkWebhook()) {
@@ -290,9 +290,9 @@ if (!empty($update)) {
                     'text' => "❌ Webhook no está configurado correctamente"
                 ]);
             }
-            exit;
-        }
-        
+        exit;
+    }
+    
         // Procesar otros mensajes
         $card = Parser1($text);
         
@@ -321,11 +321,11 @@ if (!empty($update)) {
 
 // Función para procesar la tarjeta con los gateways
 function processCard($card) {
-    $response = "💳 Información de la tarjeta:\n\n";
-    $response .= "Número: <code>{$card['card']}</code>\n";
-    $response .= "Mes: <code>{$card['MES']}</code>\n";
-    $response .= "Año: <code>{$card['ANO']}</code>\n";
-    $response .= "CVV: <code>{$card['CVV']}</code>\n";
+        $response = "💳 Información de la tarjeta:\n\n";
+        $response .= "Número: <code>{$card['card']}</code>\n";
+        $response .= "Mes: <code>{$card['MES']}</code>\n";
+        $response .= "Año: <code>{$card['ANO']}</code>\n";
+        $response .= "CVV: <code>{$card['CVV']}</code>\n";
     $response .= "Tipo: " . ($card['Amex'] ? "American Express" : "Visa/Mastercard") . "\n\n";
     
     // Aquí iría la lógica de verificación con los gateways

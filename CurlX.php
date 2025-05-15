@@ -151,7 +151,7 @@ class CurlX
         if (!is_writable($cache_dir)) {
             if (!@chmod($cache_dir, 0755)) {
                 trigger_error("Cache directory is not writable and could not be made writable: " . $cache_dir, E_USER_WARNING);
-                return;
+            return;
             }
         }
         
